@@ -1,8 +1,7 @@
 FX2LIBDIR=../..
 BASENAME = bulkloop
-SOURCES=bulkloop.c
+SOURCES=fx2lafw.c gpif-acquisition.c
 A51_SOURCES=dscr.a51
-PID=0x1004
+INCLUDES= ./inc
 
 include $(FX2LIBDIR)/lib/fx2.mk
-
