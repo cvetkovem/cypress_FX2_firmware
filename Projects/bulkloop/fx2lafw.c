@@ -103,6 +103,14 @@ static void send_err(void) {
     EP0BCL = 1;    
 }
 
+void byte2fpga(unsigned char cmd4fpga) {
+    /* PA[0] - clock, PA[1] - set ant flag, PA[2,3,4] - mode, PA[5,6,7] - number ant */
+    IOA = cmd4fpga;
+    IOA |= 0x01;      // clock up
+    SYNCDELAY();
+    IOA &= 0xFE;      // clock down
+}
+
 BOOL handle_vendorcommand(BYTE cmd) {
     /* Protocol implementation */
     switch (cmd) {
@@ -123,67 +131,67 @@ BOOL handle_vendorcommand(BYTE cmd) {
         break;
         
     case CMD_SET_OUT_SOURCE_RX1:
-        /* TODO */
+        byte2fpga(0b00000000); // set mode 0 for fpga;
         send_ok();
         return TRUE;
         break;
         
     case CMD_SET_OUT_SOURCE_RX2:
-        /* TODO */
+        byte2fpga(0b00000100); // set mode 1 for fpga;
         send_ok();
         return TRUE;
         break;
         
     case CMD_SET_OUT_CHIRPS:
-        /* TODO */
+        byte2fpga(0b00001000); // set mode 2 for fpga;
         send_ok();
         return TRUE;
         break;
         
     case CMD_SET_OUT_AUTO_0:
-        /* TODO */
+        byte2fpga(0b00001100); // set mode 3 for fpga;
         send_ok();
         return TRUE;
         break;
         
     case CMD_SET_ANT_ALL_OFF:
-        /* TODO */
+        byte2fpga(0b00000010); // set ant off for fpga;
         send_ok();
         return TRUE;
         break;
         
     case CMD_SET_ANT_A1:
-        /* TODO */
+        byte2fpga(0b00100010); // set ant 1 for fpga;
         send_ok();
         return TRUE;
         break;
         
     case CMD_SET_ANT_A2:
-        /* TODO */
+        byte2fpga(0b01000010); // set ant 2 for fpga;
         send_ok();
         return TRUE;
         break;
         
     case CMD_SET_ANT_A3:
-        /* TODO */
+        byte2fpga(0b01100010); // set ant 3 for fpga;
         send_ok();
         return TRUE;
         break;
         
     case CMD_SET_ANT_A4:
-        /* TODO */
+        byte2fpga(0b10000010); // set ant 4 for fpga;
         send_ok();
         return TRUE;
         break;
         
     case CMD_SET_ANT_A5:
-        /* TODO */
+        byte2fpga(0b10100010); // set ant 5 for fpga;
         send_ok();
         return TRUE;
         break;
         
     case CMD_SET_ANT_A6:
-        /* TODO */
+        byte2fpga(0b11000010); // set ant 6 for fpga;
         send_ok();
         return TRUE;
         break;
@@ -269,6 +277,11 @@ void hispeed_isr(void) __interrupt HISPEED_ISR {
     CLEAR_HISPEED();
 }
 
+void portA_fpga_init(void) {
+    OEA = 0xFF; // make all pins of Port A as output
+    IOA = 0x00; // all down
+}
+
 void fx2lafw_init(void) {
     /* Set DYN_OUT and ENH_PKT bits, as recommended by the TRM. */
     REVCTL = bmNOAUTOARM | bmSKIPCOMMIT;
@@ -331,6 +344,7 @@ void fx2lafw_poll(void) {
 
 void main(void) {
     fx2lafw_init();
+    portA_fpga_init();
     while (1)
         fx2lafw_poll();
 }
