@@ -45,7 +45,7 @@ static void gpif_setup_registers(void)
 	 * GPIFWFSELECT: [7:6] = SINGLEWR index, [5:4] = SINGLERD index,
 	 *               [3:2] = FIFOWR index, [1:0] = FIFORD index
 	 */
-	GPIFWFSELECT = (0x3 << 6) | (0x2 << 4) | (0x1 << 2) | (0x0 << 0);
+	GPIFWFSELECT = (uint8_t)(0x3 << 6) | (uint8_t)(0x2 << 4) | (uint8_t)(0x1 << 2) | (uint8_t)(0x0 << 0);
 
 	/* Contains RDY* pin values. Read-only according to TRM. */
 	GPIFREADYSTAT = 0;
@@ -146,7 +146,7 @@ static void gpid_make_data_dp_state(volatile BYTE *pSTATE)
 	 * Branch to IDLE if condition is true, back to S5 otherwise.
 	 * re-execute
 	 */
-	pSTATE[0] = (7 << 3) | (5 << 0) | (1 << 7);
+	pSTATE[0] = (uint8_t)(7 << 3) | (uint8_t)(5 << 0) | (uint8_t)(1 << 7);
 
 	/*
 	 * OPCODE

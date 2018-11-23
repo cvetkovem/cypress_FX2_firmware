@@ -13,12 +13,12 @@ BYTE vendor_command;
 
 static void setup_endpoints(void) {
     /* Setup EP2 (IN). */
-    EP2CFG = (1 << 7) |       /* EP is valid/activated */
-         (1 << 6) |       /* EP direction: IN */
-         (1 << 5) | (0 << 4) |    /* EP Type: bulk */
-         (1 << 3) |       /* EP buffer size: 1024 */
-         (0 << 2) |       /* Reserved. */
-         (0 << 1) | (0 << 0);     /* EP buffering: quad buffering */
+    EP2CFG = (uint8_t)(1 << 7) |       /* EP is valid/activated */
+         (uint8_t)(1 << 6) |       /* EP direction: IN */
+         (uint8_t)(1 << 5) | (uint8_t)(0 << 4) |    /* EP Type: bulk */
+         (uint8_t)(1 << 3) |       /* EP buffer size: 1024 */
+         (uint8_t)(0 << 2) |       /* Reserved. */
+         (uint8_t)(0 << 1) | (uint8_t)(0 << 0);     /* EP buffering: quad buffering */
     SYNCDELAY();
 
     /* Disable all other EPs (EP1, EP4, EP6, and EP8). */
@@ -198,7 +198,6 @@ BOOL handle_vendorcommand(BYTE cmd) {
         
     default:
         send_err();
-        return TRUE;
         break;
     }
 
