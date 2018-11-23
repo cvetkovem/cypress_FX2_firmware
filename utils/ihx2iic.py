@@ -77,14 +77,14 @@ class ihx_file (object):
 
 
 def build_eeprom_image (filename, outfile,vid,pid,devid,cb):
-    """Build a ``C2 Load'' EEPROM image.
+    """Build a ``C0 Load'' EEPROM image.
 
     For details on this format, see section 3.4.3 of
     the EZ-USB FX2 Technical Reference Manual
     """
 
     image = [
-        0xC2,                           # boot from EEPROM
+        0xC0,                           # boot from EEPROM
         lsb (vid),
         msb (vid),
         lsb (pid),

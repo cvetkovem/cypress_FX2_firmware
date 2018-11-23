@@ -82,7 +82,7 @@ $(BUILDDIR)/$(BASENAME).ihx: $(BUILDDIR) $(SOURCES) $(A51_SOURCES) $(FX2LIBDIR)/
 	 $(SDCC) -c -I $(FX2LIBDIR)/include -I $(INCLUDES) $$s -o $(BUILDDIR)/$$THISREL ; done
 	$(SDCC) -o $@ $(RELS) fx2.lib -L $(FX2LIBDIR)/lib $(LIBS)
 	objcopy -I ihex -O binary $(BUILDDIR)/$(BASENAME).ihx $(BUILDDIR)/$(BASENAME).bix
-	$(BUILDDIR)/../../../utils/ihx2iic.py -v $(VID) -p $(PID) $(BUILDDIR)/$(BASENAME).ihx $(BUILDDIR)/$(BASENAME).iic
+	$(BUILDDIR)/../../../utils/ihx2iic.py -v $(VID) -p $(PID) -c 0x00 $(BUILDDIR)/$(BASENAME).ihx $(BUILDDIR)/$(BASENAME).iic
 	packihx $(BUILDDIR)/$(BASENAME).ihx > $(BUILDDIR)/$(BASENAME).hex
 #	@rm -f $(foreach ext, a51 asm lnk lk lst map mem rel rst rest sym adb cdb, $(BUILDDIR)/*.${ext})
 

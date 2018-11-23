@@ -13,7 +13,7 @@
 #define CMD_SET_OUT_CHIRPS            0xC2
 #define CMD_SET_OUT_AUTO_0            0xC3
 
-#define CMD_SET_ANT_ALL_OFF           0xA0
+#define CMD_SET_ANT_ALL_OFF           0xAF
 #define CMD_SET_ANT_A1                0xA1
 #define CMD_SET_ANT_A2                0xA2
 #define CMD_SET_ANT_A3                0xA3

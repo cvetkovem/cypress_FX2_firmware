@@ -92,17 +92,6 @@ static void send_ok(void) {
     EP0BCL = 1;
 }
 
-static void send_err(void) {
-    uint8_t *p;
-    /* Populate the buffer. */
-    p = (uint8_t *)EP0BUF;
-    *p = 0xEE;
-
-    /* Send the message. */
-    EP0BCH = 0;
-    EP0BCL = 1;    
-}
-
 void byte2fpga(unsigned char cmd4fpga) {
     /* PA[0] - clock, PA[1] - set ant flag, PA[2,3,4] - mode, PA[5,6,7] - number ant */
     IOA = cmd4fpga;
@@ -194,10 +183,6 @@ BOOL handle_vendorcommand(BYTE cmd) {
         byte2fpga(0b11000010); // set ant 6 for fpga;
         send_ok();
         return TRUE;
-        break;
-        
-    default:
-        send_err();
         break;
     }
 
